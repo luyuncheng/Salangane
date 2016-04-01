@@ -2,14 +2,14 @@
 // Created by root on 16-3-30.
 //
 
-#ifndef SERVER_TYPES_H_H
-#define SERVER_TYPES_H_H
+#ifndef SALANGANE_TYPES_H_H
+#define SALANGANE_TYPES_H_H
 
 #include <cstdint>
 
-#ifdef salangane_STD_STRING
+#ifdef SALANGANE_STD_STRING
 #include <string>
-#else //!salangane_STD_STRING
+#else //!SALANGANE_STD_STRING
 #include <ext/vstring.h>
 #include <ext/vstring_fwd.h>
 #endif
@@ -19,7 +19,7 @@
 #endif
 
 namespace salangane {
-#ifdef salangane_STD_STRING
+#ifdef SALANGANE_STD_STRING
     using std::string;
 #else
     typedef __gnu_cxx::__sso_string string;
@@ -37,7 +37,7 @@ namespace salangane {
     inline To down_cast(From *f) {
         if(false) {
             //说明是要编译器检查是否有down_cast的implicit_cast
-            implicit_cast(From*,To)(0);
+            implicit_cast<From*,To>(0);
         }
 #if !defined(NDEBUG) && !defined(GOOGLE_PROTOBUF_NO_RTTI)
         assert(f == NULL || NULL != dynamic_cast<To>(f));
@@ -46,6 +46,6 @@ namespace salangane {
     };
 }
 
-#endif //SERVER_TYPES_H_H
+#endif //SALANGANE_TYPES_H_H
 
 

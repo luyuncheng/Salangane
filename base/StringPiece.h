@@ -2,15 +2,15 @@
 // Created by root on 16-3-31.
 //
 
-#ifndef SERVER_STRINGPIECE_H
-#define SERVER_STRINGPIECE_H
+#ifndef SALANGANE_STRINGPIECE_H
+#define SALANGANE_STRINGPIECE_H
 
 #include <cstring>
 #include <iosfwd> // for ostream forward-declaration
 
 #include "Types.h"
 
-#ifndef salangane_STD_STRING
+#ifndef SALANGANE_STD_STRING
 #include <string>
 #endif
 
@@ -18,13 +18,13 @@ namespace salangane {
     // For passing C-style string argument to a function.
     class StringArg //copyable
     {
-    private
+    private:
         const char *str_;
     public:
         StringArg(const char *str) : str_(str) {}
         StringArg(const string &str) : str_(str.c_str()) {}
 
-#ifndef salangane_STD_STRING
+#ifndef SALANGANE_STD_STRING
         StringArg(const std::string &str) : str_(str.c_str()){}
 #endif
         const char *c_str() const {return str_;}
@@ -43,10 +43,10 @@ namespace salangane {
                                                 length_(static_cast<int>(strlen(ptr_))) {}
         StringPiece(const string &str) : ptr_(str.data()),length_(static_cast<int>(str.size())) {}
 
-#ifndef salangane_STD_STRING
+#ifndef SALANGANE_STD_STRING
         StringPiece(const std::string &str): ptr_(str.data()) , length_(static_cast<int>(str.size())){}
 #endif
-        StringPiece(const char *offset  int len) : ptr_(offset), length_(len) {}
+        StringPiece(const char *offset, int len) : ptr_(offset), length_(len) {}
 
         // data() may return a pointer to a buffer with embedded NULs, and the
         // returned buffer may or may not be null terminated.  Therefore it is
@@ -62,7 +62,7 @@ namespace salangane {
         const char *end() const {return ptr_ + length_;}
 
         void clear() {ptr_ = NULL; length_ = 0;}
-        void set() (const char *buffer, int len) {
+        void set (const char *buffer, int len) {
             ptr_ = buffer;length_ = len;
         }
         void set(const char* str) {
@@ -109,7 +109,7 @@ namespace salangane {
             }
             return r;
         }
-        string as_string const {
+        string as_string() const {
             return string(data(),size());
         };
 
@@ -117,8 +117,8 @@ namespace salangane {
             target->assign(ptr_,length_);
         }
 
-#ifndef salangane_STD_STRING
-        void CopyToString(std::string *target) const {
+#ifndef SALANGANE_STD_STRING
+        void CopyToStdString(std::string *target) const {
             target->assign(ptr_,length_);
         }
 #endif
@@ -152,4 +152,4 @@ template<> struct __type_traits<salangane::StringPiece> {
 // allow StringPiece to be logged
 std::ostream& operator<<(std::ostream& o, const salangane::StringPiece& piece);
 
-#endif //SERVER_STRINGPIECE_H
+#endif //SALANGANE_STRINGPIECE_H

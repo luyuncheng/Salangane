@@ -2,8 +2,8 @@
 // Created by root on 16-3-29.
 //
 
-#ifndef SERVER_THREAD_H
-#define SERVER_THREAD_H
+#ifndef SALANGANE_THREAD_H
+#define SALANGANE_THREAD_H
 
 #include "Atomic.h"
 #include "Types.h"
@@ -53,5 +53,5 @@ namespace salangane {
     };
 }
 
-#endif //SERVER_THREAD_H
+#endif //SALANGANE_THREAD_H
 

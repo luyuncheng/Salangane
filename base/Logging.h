@@ -2,8 +2,8 @@
 // Created by root on 16-3-31.
 //
 //简单的日志，可搭配 AsyncLogging 使用
-#ifndef SERVER_LOGGING_H
-#define SERVER_LOGGING_H
+#ifndef SALANGANE_LOGGING_H
+#define SALANGANE_LOGGING_H
 
 //#include "LogStream.h"
 //#include "TimeStamp.h"
@@ -27,4 +27,4 @@ namespace salangane {
         };
     };
 }
-#endif //SERVER_LOGGING_H
+#endif //SALANGANE_LOGGING_H

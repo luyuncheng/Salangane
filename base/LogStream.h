@@ -2,8 +2,8 @@
 // Created by root on 16-3-31.
 //
 
-#ifndef SERVER_LOGSTREAM_H_H
-#define SERVER_LOGSTREAM_H_H
+#ifndef SALANGANE_LOGSTREAM_H_H
+#define SALANGANE_LOGSTREAM_H_H
 
 #include "StringPiece.h"
 #include "Types.h"
@@ -11,7 +11,7 @@
 #include <cassert>
 #include <cstring> // memcpy
 
-#ifndef  salangane_STD_STRING
+#ifndef  SALANGANE_STD_STRING
 #include <string>
 #endif
 
@@ -173,4 +173,4 @@ namespace salangane {
     }
 };
 
-#endif //SERVER_LOGSTREAM_H_H
+#endif //SALANGANE_LOGSTREAM_H_H

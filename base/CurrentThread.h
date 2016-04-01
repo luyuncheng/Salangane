@@ -2,8 +2,8 @@
 // Created by root on 16-3-31.
 //
 
-#ifndef SERVER_CURRENTTHREAD_H
-#define SERVER_CURRENTTHREAD_H
+#ifndef SALANGANE_CURRENTTHREAD_H
+#define SALANGANE_CURRENTTHREAD_H
 
 #include <stdint.h>
 
@@ -43,4 +43,4 @@ namespace salangane {
     }
 }
 
-#endif //SERVER_CURRENTTHREAD_H
+#endif //SALANGANE_CURRENTTHREAD_H

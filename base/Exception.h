@@ -2,8 +2,8 @@
 // Created by root on 16-3-31.
 //
 //带 stack trace 的异常基类
-#ifndef SERVER_EXCEPTION_H
-#define SERVER_EXCEPTION_H
+#ifndef SALANGANE_EXCEPTION_H
+#define SALANGANE_EXCEPTION_H
 
 #include "Types.h"
 #include <exception>
@@ -25,4 +25,4 @@ namespace salangane {
         const char *stackTrace() const throw();
     };
 }
-#endif //SERVER_EXCEPTION_H
+#endif //SALANGANE_EXCEPTION_H

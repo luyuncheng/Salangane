@@ -2,8 +2,8 @@
 // Created by root on 16-3-30.
 //
 //原子操作与原子整数
-#ifndef SERVER_ATOMIC_H
-#define SERVER_ATOMIC_H
+#ifndef SALANGANE_ATOMIC_H
+#define SALANGANE_ATOMIC_H
 
 #include <boost/noncopyable.hpp>
 #include <cstdint>
@@ -65,4 +65,4 @@ namespace salangane {
     typedef detail::AtomicIntegerT<int32_t> AtomicInt32;
     typedef detail::AtomicIntegerT<int64_t> AtomicInt64;
 }
-#endif //SERVER_ATOMIC_H
+#endif //SALANGANE_ATOMIC_H
