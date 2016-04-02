@@ -5,8 +5,8 @@
 #ifndef SALANGANE_LOGGING_H
 #define SALANGANE_LOGGING_H
 
-//#include "LogStream.h"
-//#include "TimeStamp.h"
+#include "LogStream.h"
+#include "Timestamp.h"
 
 namespace salangane {
     class Logger {
@@ -23,7 +23,12 @@ namespace salangane {
         // compile time calculation of basename of source file
         class SourceFile {
         public:
-            template <int N>
+            const char *data_;
+            int size_;
+            template<int N>
+            inline SourceFile(const char (&arr)[N]) : data_(arr), size_(N-1) {
+                const char *slash = strrchr(data_, '/'); //builtin function
+            }
         };
     };
 }
