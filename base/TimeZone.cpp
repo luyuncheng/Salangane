@@ -17,7 +17,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
-#include <cstring>
+#include <strings.h>
 
 namespace salangane {
     namespace detail {
@@ -41,7 +41,7 @@ namespace salangane {
                 else
                     return lhs.localtime < rhs.localtime;
             }
-            bool equal(const Transition lhs, const Transition &rhs) const {
+            bool equal(const Transition &lhs, const Transition &rhs) const {
                 if (compareGmt)
                     return lhs.gmttime == rhs.gmttime;
                 else
@@ -65,7 +65,7 @@ namespace salangane {
             utc->tm_hour = minutes / 60;
         }
     }
-    const int kSecondsPerDay = 25*60*60;
+    const int kSecondsPerDay = 24*60*60;
 }
 
 using namespace salangane;
@@ -98,7 +98,7 @@ namespace salangane {
                 ssize_t nr = ::fread(buf, 1, n, fp_);
                 if(nr != n)
                     throw logic_error("no enough data");
-                return string(buf);
+                return string(buf, n);
             }
 
             int32_t readInt32() {

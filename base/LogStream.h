@@ -2,8 +2,8 @@
 // Created by root on 16-3-31.
 //
 
-#ifndef SALANGANE_LOGSTREAM_H_H
-#define SALANGANE_LOGSTREAM_H_H
+#ifndef SALANGANE_LOGSTREAM_H
+#define SALANGANE_LOGSTREAM_H
 
 #include "StringPiece.h"
 #include "Types.h"
@@ -25,17 +25,6 @@ namespace salangane {
         
         template <int SIZE>
         class FixedBuffer : boost::noncopyable {
-        private:
-            char data_[SIZE];
-            char *cur_;
-            void (*cookie_) ();
-            
-            const char *end() const {return data_ + sizeof(data_);}
-            // must be outline function for cookies;
-            static void cookieStart();
-            static void cookieEnd();
-
-
         public:
             FixedBuffer() : cur_(data_) {
                 setCookie(cookieStart);
@@ -68,23 +57,25 @@ namespace salangane {
             // for used by unit test
             string toString() const { return string(data_, length()); }
             StringPiece toStringPiece() const { return StringPiece(data_, length()); }
+       private:
+            const char *end() const {return data_ + sizeof(data_);}
+            // must be outline function for cookies;
+            static void cookieStart();
+            static void cookieEnd();
 
+            char data_[SIZE];
+            char *cur_;
+            void (*cookie_) ();
 
         };
     }
     class LogStream : boost::noncopyable {
+    public:
+
         typedef LogStream self;
         typedef detail::FixedBuffer<detail::kSmallBuffer> Buffer;
-    private:
-        void staticCheck();
 
-        template <typename T>
-        void formatInteger(T);
 
-        Buffer buffer_;
-
-        static const int kMaxNumericSize = 32;
-    public:
         self &operator <<(bool v) {
             buffer_.append(v ? "1" : "0",1);
             return *this;
@@ -153,24 +144,37 @@ namespace salangane {
         void append(const char* data, int len) { buffer_.append(data, len); }
         const Buffer& buffer() const { return buffer_; }
         void resetBuffer() { buffer_.reset(); }
+
+    private:
+
+        void staticCheck();
+
+        template <typename T>
+        void formatInteger(T);
+
+        Buffer buffer_;
+
+        static const int kMaxNumericSize = 32;
     };
 
     class Fmt {
-    private:
-        char buf_[32];
-        int length_;
+
     public:
         template<typename T>
         Fmt(const char *fmt, T val);
 
         const char *data() const {return buf_;}
         int length() const {return length_;}
+
+    private:
+        char buf_[32];
+        int length_;
     };
 
     inline LogStream& operator<<(LogStream &s, const Fmt &fmt) {
         s.append(fmt.data(),fmt.length());
         return s;
     }
-};
+}
 
-#endif //SALANGANE_LOGSTREAM_H_H
+#endif //SALANGANE_LOGSTREAM_H

@@ -206,3 +206,4 @@ template Fmt::Fmt(const char* fmt, unsigned long long);
 
 template Fmt::Fmt(const char* fmt, float);
 template Fmt::Fmt(const char* fmt, double);
+

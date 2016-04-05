@@ -7,15 +7,14 @@
 
 #include <boost/noncopyable.hpp>
 #include <cstdint>
-#include <stdint-gcc.h>
+
 
 
 namespace salangane {
     namespace detail {
         template<typename T>
         class AtomicIntegerT : boost::noncopyable {
-        private:
-            volatile T value_;
+
         public:
             AtomicIntegerT() : value_(0) { }
 
@@ -58,6 +57,9 @@ namespace salangane {
             T getAndSet(T newValue) {
                 return __sync_lock_test_and_set(&value_, newValue);
             }
+
+        private:
+            volatile T value_;
 
         };
     }

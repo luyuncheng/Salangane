@@ -18,31 +18,30 @@ namespace salangane {
 /// It's recommended to pass it by value, since it's passed in register on x64.
     class Timestamp : public salangane::copyable,
                       public boost::less_than_comparable<Timestamp> {
-    private:
-        int64_t microSecondSinceEpoch_;
+
     public:
         static const int kMicroSecondsPerSecond = 1000 * 1000;
-        Timestamp():microSecondSinceEpoch_(0){}
+        Timestamp():microSecondsSinceEpoch_(0){}
         ///
         /// Constucts a Timestamp at specific time
         ///
         /// @param microSecondsSinceEpoch
 
-        explicit Timestamp(int64_t microSecondSinceEpochArg) : microSecondSinceEpoch_(microSecondSinceEpochArg){}
+        explicit Timestamp(int64_t microSecondsSinceEpochArg) : microSecondsSinceEpoch_(microSecondsSinceEpochArg){}
         void swap (Timestamp & that) {
-            std::swap(microSecondSinceEpoch_,that.microSecondSinceEpoch_);
+            std::swap(microSecondsSinceEpoch_,that.microSecondsSinceEpoch_);
         }
         // default copy/assignment/dtor are Okay
 
         string toString() const;
         string toFormattedString(bool showMicroseconds = true) const;
 
-        bool valid() const { return microSecondSinceEpoch_ > 0;}
+        bool valid() const { return microSecondsSinceEpoch_ > 0;}
 
 //        for internal usage
-        int64_t  microSecondsSinceEpoch() const { return microSecondSinceEpoch_;}
+        int64_t  microSecondsSinceEpoch() const { return microSecondsSinceEpoch_;}
         time_t  secondsSinceEpoch() const {
-            return static_cast<time_t> (microSecondSinceEpoch_ / kMicroSecondsPerSecond);
+            return static_cast<time_t> (microSecondsSinceEpoch_ / kMicroSecondsPerSecond);
         }
         //
         //Get time Now
@@ -59,7 +58,8 @@ namespace salangane {
             return Timestamp(static_cast<int64_t >(t) * kMicroSecondsPerSecond +microseconds);
         }
 
-
+    private:
+        int64_t microSecondsSinceEpoch_;
     };
 
     inline bool operator < (Timestamp lhs, Timestamp rhs) {

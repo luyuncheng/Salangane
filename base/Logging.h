@@ -1,6 +1,7 @@
 //
 // Created by root on 16-3-31.
 //
+
 //简单的日志，可搭配 AsyncLogging 使用
 #ifndef SALANGANE_LOGGING_H
 #define SALANGANE_LOGGING_H
@@ -51,25 +52,6 @@ namespace salangane {
         Logger(SourceFile file, int line, bool toAbort);
         ~Logger();
 
-    private:
-        class Impl{
-
-        public:
-            typedef  Logger::LogLevel  LogLevel;
-
-            Timestamp time_;
-            LogStream stream_;
-            LogLevel level_;
-            int line_;
-            SourceFile basename_;
-
-            Impl(LogLevel level, int old_errno, const SourceFile &file, int line);
-            void formatTime();
-            void finish();
-        };
-
-        Impl impl_;
-    public:
         LogStream &stream() {return impl_.stream_;}
         static LogLevel  logLevel();
         static void setLogLevel(LogLevel level);
@@ -79,6 +61,26 @@ namespace salangane {
         static void setOutput(OutputFunc);
         static void setFlush(FlushFunc);
         static void setTimeZone(const TimeZone &tz);
+
+    private:
+        class Impl{
+
+        public:
+            typedef  Logger::LogLevel  LogLevel;
+            Impl(LogLevel level, int old_errno, const SourceFile &file, int line);
+            void formatTime();
+            void finish();
+
+            Timestamp time_;
+            LogStream stream_;
+            LogLevel level_;
+            int line_;
+            SourceFile basename_;
+
+
+        };
+
+        Impl impl_;
 
 
     };

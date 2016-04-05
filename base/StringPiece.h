@@ -18,8 +18,7 @@ namespace salangane {
     // For passing C-style string argument to a function.
     class StringArg //copyable
     {
-    private:
-        const char *str_;
+
     public:
         StringArg(const char *str) : str_(str) {}
         StringArg(const string &str) : str_(str.c_str()) {}
@@ -28,6 +27,8 @@ namespace salangane {
         StringArg(const std::string &str) : str_(str.c_str()){}
 #endif
         const char *c_str() const {return str_;}
+    private:
+        const char *str_;
     };
     class StringPiece {
     private:
@@ -111,7 +112,7 @@ namespace salangane {
         }
         string as_string() const {
             return string(data(),size());
-        };
+        }
 
         void CopyToString(string *target) const {
             target->assign(ptr_,length_);

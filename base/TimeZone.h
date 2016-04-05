@@ -14,10 +14,7 @@ namespace salangane {
 
     //TimeZone for 197~2030
     class TimeZone : public salangane::copyable {
-    public:
-        struct Data;
-    private:
-        boost::shared_ptr<Data> data_;
+
     public:
         explicit TimeZone(const char *zonefile);
         TimeZone(int eastOfUtc, const char *tzname); // a fixed timezone
@@ -27,7 +24,7 @@ namespace salangane {
 
         bool valid() const {
             return static_cast<bool>(data_);
-        };
+        }
 
         struct tm toLocalTime(time_t secondsSinceEpoch) const;
         time_t fromLocalTime(const struct tm&) const;
@@ -38,6 +35,12 @@ namespace salangane {
         static time_t fromUtcTime(const struct tm&);
         //year in [1900,2500],month[1,12],day in [1,31]
         static time_t fromUtcTime(int year, int month, int day, int hour, int minute, int seconds);
+
+        struct  Data;
+
+
+        boost::shared_ptr<Data> data_;
     };
 }
 #endif //SALANGANE_TIMEZONE_H
+
