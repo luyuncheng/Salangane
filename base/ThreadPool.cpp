@@ -115,10 +115,34 @@ ThreadPool::Task ThreadPool::take() {
     }
     return task;
 }
-
 bool ThreadPool::isFull() const {
     // mutex_ must be locked
     mutex_.assertLocked();
     return maxQueueSize_ > 0 && queue_.size() >= maxQueueSize_;
 }
 
+void ThreadPool::runInThread() {
+    try {
+        if(threadInitCallback_) {
+            threadInitCallback_();
+        }
+        while( running_) {
+            Task task(take());
+            if (task) {
+                task();
+            }
+        }
+    } catch (const Exception &ex) {
+        fprintf(stderr, "exception caught in ThreadPool %s\n", name_.c_str());
+        fprintf(stderr, "reason: %s\n", ex.what());
+        fprintf(stderr, "stack trace: %s\n", ex.stackTrace());
+        abort();
+    } catch (const std::exception &ex) {
+        fprintf(stderr, "exception caught in ThreadPool %s\n", name_.c_str());
+        fprintf(stderr, "reason: %s\n", ex.what());
+        abort();
+    } catch (...) {
+        fprintf(stderr, "unknown exception caught in ThreadPool %s\n",name_.c_str());
+        throw;
+    }
+}
