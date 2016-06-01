@@ -6,6 +6,7 @@
 #define SALANGANE_TIMEZONE_H
 
 #include "copyable.h"
+#include <memory>
 #include <boost/shared_ptr.hpp>
 #include <time.h>
 
@@ -13,13 +14,13 @@ namespace salangane {
 
 
     //TimeZone for 197~2030
-    class TimeZone : salangane::copyable {
+    class TimeZone : public salangane::copyable {
 
     public:
         explicit TimeZone(const char *zonefile);
         TimeZone(int eastOfUtc, const char *tzname); // a fixed timezone
         TimeZone(){} //invalid timezone
-
+        //~TimeZone(){delete(data_);}
         //default copy ctor/assignment/dtor are okay
 
         bool valid() const {
@@ -37,9 +38,10 @@ namespace salangane {
         static time_t fromUtcTime(int year, int month, int day, int hour, int minute, int seconds);
 
         struct  Data;
+    private:
 
-
-        boost::shared_ptr<Data> data_;
+        //boost::shared_ptr<Data> data_;
+        std::shared_ptr<Data> data_;
     };
 }
 #endif //SALANGANE_TIMEZONE_H
