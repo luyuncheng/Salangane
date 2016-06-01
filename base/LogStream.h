@@ -8,8 +8,8 @@
 #include "StringPiece.h"
 #include "Types.h"
 
-#include <cassert>
-#include <cstring> // memcpy
+#include <assert.h>
+#include <string.h> // memcpy
 
 #ifndef  SALANGANE_STD_STRING
 #include <string>
@@ -40,14 +40,14 @@ namespace salangane {
                 }
             }
             const char *data() const {return data_;}
-            int length() const {return static_cast<int>(cur_-data_);}
+            int length() const {return static_cast<int>(cur_ - data_);}
 
             //write to data_ directly
             char *current() {return cur_;}
-            int avail() const { return static_cast<int>(end()-cur_);}
-            void add(size_t len) {cur_ += len;}
+            int avail() const { return static_cast<int>(end() - cur_);}
+            void add(size_t len) { cur_ += len; }
 
-            void reset() {cur_ = data_;}
+            void reset() { cur_ = data_; }
             void bzero() {::bzero(data_, sizeof(data_));}
 
             //for used by GDB
@@ -55,7 +55,8 @@ namespace salangane {
             void setCookie(void (*cookie)()) {cookie_ = cookie;}
 
             // for used by unit test
-            string toString() const { return string(data_, length()); }
+            // not use string(data_, length());
+            string toString() const { return string(data_).substr(length()); }
             StringPiece toStringPiece() const { return StringPiece(data_, length()); }
        private:
             const char *end() const {return data_ + sizeof(data_);}

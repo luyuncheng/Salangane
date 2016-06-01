@@ -11,15 +11,16 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+
 #include <errno.h>
-#include <cstdio>
+#include <stdio.h>
 #include <unistd.h>
 #include <sys/prctl.h>
 #include <sys/types.h>
 #include <sys/syscall.h>
 #include <linux/unistd.h>
 
-namespace salagane {
+namespace salangane {
     namespace CurrentThread {
         __thread int t_cachedTid = 0;
         __thread char t_tidString[32];
@@ -28,7 +29,6 @@ namespace salagane {
         const bool sameType = boost::is_same<int, pid_t >::value;
         BOOST_STATIC_ASSERT(sameType);
     };
-
     namespace detail {
 
         pid_t gettid() {
@@ -63,12 +63,14 @@ namespace salagane {
 
             ThreadData(const ThreadFunc &func,
                        const salangane::string &name,
-                       const boost::shared_ptr<pid_t> &tid) :
-                       func_(func), name_(name), wkTid_(tid) { }
+                       const boost::shared_ptr<pid_t> &tid)
+                    :  func_(func),
+                       name_(name),
+                       wkTid_((boost::weak_ptr<pid_t>)tid) { }
 
             void runInThread() {
                 pid_t tid = salangane::CurrentThread::tid();
-                boost::shared_ptr<pid_t> ptid = wkTid_.lock();
+                boost::shared_ptr<pid_t> ptid = (boost::shared_ptr<pid_t>)wkTid_.lock();
                 if(ptid) {
                     *ptid = tid;
                     ptid.reset();
@@ -109,6 +111,7 @@ namespace salagane {
     }
 }
 using namespace salangane;
+
 void CurrentThread::cacheTid() {
     if (t_cachedTid == 0) {
         t_cachedTid = detail::gettid();
@@ -118,7 +121,7 @@ void CurrentThread::cacheTid() {
 bool CurrentThread::isMainThread() {
     return tid() == ::getpid();
 }
-bool CurrentThread::sleepUsec(int64_t usec) {
+void CurrentThread::sleepUsec(int64_t usec) {
     struct timespec ts = {0, 0};
     ts.tv_sec = static_cast<time_t>(usec / Timestamp::kMicroSecondsPerSecond);
     ts.tv_nsec = static_cast<long>(usec % Timestamp::kMicroSecondsPerSecond * 1000);
@@ -170,10 +173,11 @@ void Thread::setDefaultName() {
 void Thread::start() {
     assert(!started_);
     started_ = true;
+    // FIXME : move(func_)
     detail::ThreadData *data = new detail::ThreadData(func_, name_, tid_);
-    if(pthread_create(&pthreadId_, NULL, &detail::startThread, data)) {
+    if(pthread_create(&pthreadId_, NULL, &(detail::startThread), data)) {
         started_ = false;
-        delete data;
+        delete data; // or no delete?
         LOG_SYSFATAL << "Failed in pthread_create";
     }
 }

@@ -1,7 +1,7 @@
 //
 // Created by root on 16-4-2.
 //
-
+#pragma once
 #ifndef SALANGANE_TIMESTAMP_H
 #define SALANGANE_TIMESTAMP_H
 

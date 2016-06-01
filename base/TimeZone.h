@@ -1,7 +1,7 @@
 //
 // Created by root on 16-4-2.
 //
-
+#pragma once
 #ifndef SALANGANE_TIMEZONE_H
 #define SALANGANE_TIMEZONE_H
 
@@ -13,7 +13,7 @@ namespace salangane {
 
 
     //TimeZone for 197~2030
-    class TimeZone : public salangane::copyable {
+    class TimeZone : salangane::copyable {
 
     public:
         explicit TimeZone(const char *zonefile);

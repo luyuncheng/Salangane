@@ -28,7 +28,10 @@ namespace salangane {
             const char *data_;
             int size_;
             template<int N>
-            inline SourceFile(const char (&arr)[N]) : data_(arr), size_(N-1) {
+            inline SourceFile(const char (&arr)[N])
+                    : data_(arr)
+            {
+                size_ = N-1;
                 const char *slash = strrchr(data_, '/'); //builtin function
                 if(slash) {
                     data_  = slash + 1;
@@ -111,15 +114,15 @@ namespace salangane {
   salangane::Logger(__FILE__, __LINE__, salangane::Logger::DEBUG, __func__).stream()
 #define LOG_INFO if (salangane::Logger::logLevel() <= salangane::Logger::INFO) \
   salangane::Logger(__FILE__, __LINE__).stream()
-#define LOG_WARN salangane::Logger(__FILE__, __LINE__, salangane::Logger::WARN).stream()
-#define LOG_ERROR salangane::Logger(__FILE__, __LINE__, salangane::Logger::ERROR).stream()
-#define LOG_FATAL salangane::Logger(__FILE__, __LINE__, salangane::Logger::FATAL).stream()
-#define LOG_SYSERR salangane::Logger(__FILE__, __LINE__, false).stream()
+#define LOG_WARN     salangane::Logger(__FILE__, __LINE__, salangane::Logger::WARN).stream()
+#define LOG_ERROR    salangane::Logger(__FILE__, __LINE__, salangane::Logger::ERROR).stream()
+#define LOG_FATAL    salangane::Logger(__FILE__, __LINE__, salangane::Logger::FATAL).stream()
+#define LOG_SYSERR   salangane::Logger(__FILE__, __LINE__, false).stream()
 #define LOG_SYSFATAL salangane::Logger(__FILE__, __LINE__, true).stream()
 
-    const char *strerror_tl(int savedErrno);
+const char *strerror_tl(int savedErrno);
 
-    // Taken from glog/logging.h
+// Taken from glog/logging.h
 //
 // Check that the input is non NULL.  This very useful in constructor
 // initializer lists.

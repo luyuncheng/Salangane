@@ -17,7 +17,7 @@ namespace salangane {
             MCHECK(pthread_cond_init(&pcond_ , NULL));
         }
         ~Condition() {
-            MCHECK(pthread_mutex_destroy(&pcond_));
+            MCHECK(pthread_cond_destroy(&pcond_ ));
         }
 
         void wait() {

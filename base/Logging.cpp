@@ -1,7 +1,7 @@
 //
 // Created by root on 16-4-2.
 //
-
+#pragma once
 #include "Logging.h"
 #include "CurrentThread.h"
 #include "Timestamp.h"
@@ -10,7 +10,7 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <cstring>
+#include <string.h>
 
 #include <sstream>
 

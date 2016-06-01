@@ -64,11 +64,12 @@ void ThreadPool::run(const Task &task) {
         task();
     } else {
         MutexLockGuard lock(mutex_);
-        while(isFUll()) {
+
+        while( isFull() ) {
             // because is full so notFull condition must be pending
             notFull_.wait();
         }
-        assert(!isFUll());
+        assert(! isFull() );
 
         queue_.push_back(task);
         // notify there is not empty condition, you can get this condition

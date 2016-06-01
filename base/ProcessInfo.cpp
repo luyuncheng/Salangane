@@ -172,7 +172,7 @@ string ProcessInfo::exePath() {
 
 int ProcessInfo::openedFiles() {
     t_numOpendFiles = 0;
-    scandir("/proc/self/fd",fdDirFilter());
+    scanDir("/proc/self/fd",fdDirFilter);
     return t_numOpendFiles;
 }
 
