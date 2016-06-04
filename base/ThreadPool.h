@@ -11,9 +11,9 @@
 #include "Types.h"
 
 #include <boost/function.hpp>
-#include <boost/noncopyable.hpp>ci
+#include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
-
+#include <functional>
 #include <deque>
 
 namespace salangane {

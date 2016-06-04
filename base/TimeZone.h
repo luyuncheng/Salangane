@@ -40,6 +40,7 @@ namespace salangane {
         struct  Data;
     private:
 
+        // in old boost it can not implict construct or delete function
         //boost::shared_ptr<Data> data_;
         std::shared_ptr<Data> data_;
     };

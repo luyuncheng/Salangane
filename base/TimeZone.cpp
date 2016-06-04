@@ -98,7 +98,7 @@ namespace salangane {
                 ssize_t nr = ::fread(buf, 1, n, fp_);
                 if(nr != n)
                     throw logic_error("no enough data");
-                return string(buf, n);
+                return string(buf);
             }
 
             int32_t readInt32() {

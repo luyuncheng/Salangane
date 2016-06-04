@@ -3,7 +3,7 @@
 //
 
 #include "Date.h"
-#include <cstdio>
+#include <stdio.h>
 
 namespace salangane {
     namespace detail {
