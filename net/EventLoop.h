@@ -18,6 +18,10 @@
 #include "../net/Callbacks.h"
 #include "../net/TimerId.h"
 
+//EventLoop 事件循环（反应器 Reactor），每个线程只能有一个 EventLoop 实
+//体，它负责 IO 和定时器事件的分派。它用 eventfd(2) 来异步唤醒，这有别于传
+// 统的用一对 pipe(2) 的办法。它用 TimerQueue 作为计时器管理，用 Poller 作
+// 为 IO Multiplexing ( IO 多路复用)。
 namespace salangane {
     namespace net {
         class Channel;
@@ -107,7 +111,7 @@ namespace salangane {
             void wakeup();
             void updateChannel(Channel *channel);
             void removeChannel(Channel *channel);
-            void hasChannel(Channel *channel);
+            bool hasChannel(Channel *channel);
 
             //pid_t threadId() const {return threadId_;}
             void assertInLoopThread() {
