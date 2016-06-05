@@ -40,7 +40,15 @@ void test(int maxSize) {
     LOG_WARN << "Done";
 
     salangane::CountDownLatch latch(1);
-    auto lt = std::bind((salangane::CountDownLatch::countDown), &latch);
+    // wrong
+    //auto lt = std::bind(&(salangane::CountDownLatch::countDown), std::ref(latch));
+
+    //black also wrong
+    //auto lt = std::bind(decltype(&salangane::CountDownLatch::countDown)(&(salangane::CountDownLatch::countDown)),latch);
+
+    auto lt = std::bind(&salangane::CountDownLatch::countDown, &latch);
+    //auto l1 = &salangane::CountDownLatch::countDown;
+    //auto l2 = &(salangane::CountDownLatch::countDown);
     pool.run(lt);
     latch.wait();
     pool.stop();

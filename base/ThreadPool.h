@@ -52,6 +52,7 @@ namespace salangane {
 
         // if function is const than mutex is can changeable
         mutable MutexLock mutex_;
+
         Condition notEmpty_;
         Condition notFull_;
         string name_;
