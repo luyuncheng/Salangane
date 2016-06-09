@@ -152,7 +152,7 @@ namespace salangane {
 
             int64_t iteration_;
             const pid_t threadId_;
-            Timestamp pollerReturnTime_;
+            Timestamp pollReturnTime_;
             // scoped_ptr can verify object can delete correct. it can not transfer the owner
             boost::scoped_ptr<Poller> poller_;
             boost::scoped_ptr<TimerQueue> timerQueue_;
